@@ -82,5 +82,4 @@ const makeConfig = (argv, { entry, out, target, library = 'commonjs' }) => ({
 module.exports = (env, argv) => [
     makeConfig(argv, { entry: './src/client/index.tsx', out: './out/client/index.js', target: 'web', library: 'module' }),
     makeConfig(argv, { entry: './src/extension/extension.ts', out: './out/extension/extension.js', target: 'node' }),
-    makeConfig(argv, { entry: './src/extension/extension.ts', out: './out/extension/extension.web.js', target: 'webworker' }),
 ];

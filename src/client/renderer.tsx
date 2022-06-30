@@ -30,8 +30,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { json as jsonPretty, xml as xmlPretty } from 'vkbeautify';
 import { RendererContext } from 'vscode-notebook-renderer';
 import { DothttpExecuteResponse, MessageType, NotebookExecutionMetadata } from './response';
-
-
+import './style.css';
 
 
 type CountAndExistence = {
