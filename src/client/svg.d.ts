@@ -1,4 +1,4 @@
-declare module '*.svg' {
-    const OpenInEditor: string;
-    export = OpenInEditor;
+declare module "*.svg" {
+    const content: any;
+    export default content;
 }

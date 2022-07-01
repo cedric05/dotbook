@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import AceEditor from '@cedric05/preact-ace';
-import * as ClearAll from '@vscode/codicons/src/icons/clear-all.svg';
-import * as LinkExternal from '@vscode/codicons/src/icons/code.svg';
-import * as OpenInEditor from '@vscode/codicons/src/icons/open-preview.svg';
+import ClearAll from '@vscode/codicons/src/icons/clear-all.svg';
+import LinkExternal from '@vscode/codicons/src/icons/code.svg' ;
+import OpenInEditor from '@vscode/codicons/src/icons/open-preview.svg';
 import "ace-builds/src-noconflict/ext-language_tools";
 import modelList from 'ace-builds/src-noconflict/ext-modelist';
 import 'ace-builds/src-noconflict/mode-asciidoc';
@@ -137,7 +137,7 @@ export const Response: FunctionComponent<{ out: Readonly<{ response: DothttpExec
                 headerTab={headerTab}
                 testResultTab={testResultTab}
                 outputPropTab={outputPropTab} responseTabMeta={responseTab} />
-            <span class='tab-bar-tools'>
+             <span class='tab-bar-tools'>
                 <button id={`format-${uuid}`} class='search-button' title='Format'
                     onClick={() => setResponseBody(formatBody(filenameExtension, responseBody))}>Beautify <Icon name={ClearAll} /></button>
                 <button id={saveButtonId} class='search-button' title='Open In Editor'
@@ -167,7 +167,7 @@ export const Response: FunctionComponent<{ out: Readonly<{ response: DothttpExec
     </div>;
 };
 
-const Icon: FunctionComponent<{ name: string }> = ({ name: i }) => {
+const Icon: FunctionComponent<{ name: any }> = ({ name: i }) => {
     return <span class='icon'
         dangerouslySetInnerHTML={{ __html: i }}
     />;
