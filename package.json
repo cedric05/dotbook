@@ -3,6 +3,8 @@
   "displayName": "dotbook",
   "description": "Ace editor view for dothttp notebook output renderer",
   "version": "0.0.1",
+  "publisher": "shivaprasanth",
+  "license": "Apache-2.0",
   "engines": {
     "vscode": "^1.68.0"
   },
