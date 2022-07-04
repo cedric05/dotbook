@@ -5,15 +5,31 @@
   "version": "0.0.1",
   "publisher": "shivaprasanth",
   "license": "Apache-2.0",
+  "repository": {
+		"url": "https://github.com/cedric05/dotbook"
+	},
+  "icon": "https://ace.c9.io/doc/site/images/ace-logo.png",
   "engines": {
-    "vscode": "^1.68.0"
+		"vscode": "^1.63.0"
   },
+  "sponsor": {
+		"url": "https://github.com/sponsors/cedric05"
+	},
   "keywords": [
-    "notebookRenderer"
-  ],
-  "categories": [
-    "Other"
-  ],
+		"HTTP",
+		"REST",
+		"GraphQL",
+		"Intellij Http Client",
+		"Postman",
+		"Soap",
+		"rest-client"
+	],
+	"categories": [
+		"Programming Languages",
+		"Notebooks",
+    "Snippets",
+		"Other"
+	],
   "activationEvents": [],
   "main": "./out/extension/extension.js",
   "browser": "./out/extension/extension.web.js",
