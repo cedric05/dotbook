@@ -2,7 +2,7 @@
   "name": "dotbook",
   "displayName": "dotbook",
   "description": "Ace editor view for dothttp notebook output renderer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "shivaprasanth",
   "license": "Apache-2.0",
   "repository": {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import AceEditor from '@cedric05/preact-ace';
 import ClearAll from '@vscode/codicons/src/icons/clear-all.svg';
-import LinkExternal from '@vscode/codicons/src/icons/code.svg' ;
+import LinkExternal from '@vscode/codicons/src/icons/code.svg';
 import OpenInEditor from '@vscode/codicons/src/icons/open-preview.svg';
 import "ace-builds/src-noconflict/ext-language_tools";
 import modelList from 'ace-builds/src-noconflict/ext-modelist';
@@ -52,7 +52,8 @@ enum TabType {
     Headers,
     RequestSent,
     TestResult,
-    GeneratedProperties
+    GeneratedProperties,
+    RedirectHistory,
 }
 
 const MAX_DEFAULT_FORMAT_LEN = 2 * 1024 * 1024;
@@ -71,11 +72,15 @@ export const Response: FunctionComponent<{ out: Readonly<{ response: DothttpExec
     const { headers, url, status } = props.response
     const { executionTime } = out.metadata
     let { body, output_file } = props.response
-    const { filenameExtension, http: dothttpCode, script_result } = props
+    const { filenameExtension, http: dothttpCode, script_result, history } = props
 
 
     if (body.length < MAX_DEFAULT_FORMAT_LEN) {
         body = formatBody(filenameExtension, body);
+    }
+    let redirectHistory = ""
+    if (history) {
+        redirectHistory = formatBody('json', JSON.stringify(history));
     }
     const [responseBody, setResponseBody] = useState(body);
 
@@ -107,6 +112,7 @@ export const Response: FunctionComponent<{ out: Readonly<{ response: DothttpExec
     const testResultTab = arrayAndCount(script_result?.tests);
     testResultTab.exists = testResultTab.exists || Boolean(script_result?.stdout) || Boolean(script_result?.error);
     const responseTab: CountAndExistence = { exists: true, count: output_file ? 1 : 0 }
+    const redirectHistoryTab: CountAndExistence = arrayAndCount(history)
 
     /*
     // show success and failure accordingly
@@ -136,8 +142,8 @@ export const Response: FunctionComponent<{ out: Readonly<{ response: DothttpExec
                 requestSentExists={dothttpCode ? true : false}
                 headerTab={headerTab}
                 testResultTab={testResultTab}
-                outputPropTab={outputPropTab} responseTabMeta={responseTab} />
-             <span class='tab-bar-tools'>
+                outputPropTab={outputPropTab} responseTabMeta={responseTab} redirectHistoryTab={redirectHistoryTab} />
+            <span class='tab-bar-tools'>
                 <button id={`format-${uuid}`} class='search-button' title='Format'
                     onClick={() => setResponseBody(formatBody(filenameExtension, responseBody))}>Beautify <Icon name={ClearAll} /></button>
                 <button id={saveButtonId} class='search-button' title='Open In Editor'
@@ -150,6 +156,14 @@ export const Response: FunctionComponent<{ out: Readonly<{ response: DothttpExec
         <div hidden={!(responseTab.exists && activeIndex === TabType.Response)}>
             <ShowOutputDiv output_file={output_file} />
             <AceWrap data={responseBody} mode={mode} active={activeIndex === TabType.Response} theme={theme} placeholder={output_file ? `check ${output_file}` : `Empty Response from Server`}></AceWrap>
+        </div>
+        <div hidden={!(redirectHistoryTab.exists && activeIndex === TabType.RedirectHistory)}>
+            <AceWrap
+                mode="json"
+                data={redirectHistory}
+                active={activeIndex === TabType.RedirectHistory}
+                theme={theme}>
+            </AceWrap>
         </div>
         {/* <AceWrap data={responseBody} mode="text" active={activeIndex === TabType.RawResponse} theme={theme}></AceWrap> */}
         <TableTab data={objectToDataGridRows(headers)} columns={["Header", "Value"]} active={headerTab.exists && activeIndex === TabType.Headers} />
@@ -175,7 +189,7 @@ const Icon: FunctionComponent<{ name: any }> = ({ name: i }) => {
 
 
 const ShowOutputDiv: FunctionComponent<{ output_file?: string }> = ({ output_file }) => {
-    if (output_file){
+    if (output_file) {
         return <div class='request-url'>
             {output_file ? `Output stored in ` : ""} <strong>{output_file}</strong>
             <br />
@@ -193,8 +207,9 @@ const TabHeader: FunctionComponent<{
     headerTab: CountAndExistence,
     testResultTab: CountAndExistence,
     outputPropTab: CountAndExistence,
-    responseTabMeta: CountAndExistence
-}> = ({ activeTab, setActive, headerTab: headers, requestSentExists, darkMode, testResultTab: testResult, outputPropTab: outputProps, responseTabMeta }) => {
+    responseTabMeta: CountAndExistence,
+    redirectHistoryTab: CountAndExistence,
+}> = ({ activeTab, setActive, headerTab: headers, requestSentExists, darkMode, testResultTab: testResult, outputPropTab: outputProps, responseTabMeta, redirectHistoryTab }) => {
 
     function pushIfExists(results: h.JSX.Element[], countAndExistence: CountAndExistence, tabHeading: string, activeTabNumber: TabType, title = "") {
         if (countAndExistence.exists) {
@@ -210,6 +225,7 @@ const TabHeader: FunctionComponent<{
         pushIfExists(result, testResult, "Test Result", TabType.TestResult);
         pushIfExists(result, outputProps, "Generated Properties", TabType.GeneratedProperties);
         pushIfExists(result, { exists: requestSentExists, count: 0 }, "Request Sent", TabType.RequestSent);
+        pushIfExists(result, redirectHistoryTab, "Redirect History", TabType.RedirectHistory);
 
         return result;
     };

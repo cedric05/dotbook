@@ -33,6 +33,27 @@ export interface DothttpExecuteResponse {
     error?: boolean;
     error_message?: string;
     script_result?: ScriptResult
+    history?: Array<DothttpRedirectHistory>
+}
+
+export type Method =
+    | 'get' | 'GET'
+    | 'delete' | 'DELETE'
+    | 'head' | 'HEAD'
+    | 'options' | 'OPTIONS'
+    | 'post' | 'POST'
+    | 'put' | 'PUT'
+    | 'patch' | 'PATCH'
+    | 'purge' | 'PURGE'
+    | 'link' | 'LINK'
+    | 'unlink' | 'UNLINK'
+
+
+export interface DothttpRedirectHistory {
+    status: number,
+    method: Method,
+    url: string,
+    headers: Headers
 }
 
 export interface ScriptResult {
