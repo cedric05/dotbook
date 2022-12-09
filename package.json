@@ -8,9 +8,8 @@
   "repository": {
 		"url": "https://github.com/cedric05/dotbook"
 	},
-  "icon": "https://ace.c9.io/doc/site/images/ace-logo.png",
   "engines": {
-		"vscode": "^1.63.0"
+		"vscode": "^1.68.0"
   },
   "sponsor": {
 		"url": "https://github.com/sponsors/cedric05"
