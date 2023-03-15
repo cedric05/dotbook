@@ -80,7 +80,7 @@
     "uuid": "^8.3.2",
     "vkbeautify": "^0.99.3",
     "vscode-notebook-error-overlay": "^1.0.1",
-    "webpack": "^5.26.3",
+    "webpack": "^5.76.0",
     "webpack-cli": "^4.5.0",
     "svg-inline-loader":"^0.8.2"
   }
