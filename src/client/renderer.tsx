@@ -308,9 +308,16 @@ const Status: FunctionComponent<{ code: number, url: string, executionTime: stri
         statusType = 'server-err';
     }
 
+    var detailed_phrase = "";
+    if (code === 0){
+        detailed_phrase = "REQUEST_PARSE_ERROR";
+    } else {
+        detailed_phrase = getReasonPhrase(code).toLowerCase();
+    }
 
     return <div class="status-and-url">
-        <span className={`status-label status-label-${statusType!}`} >{code} {getReasonPhrase(code).toLowerCase()}</span>
+        <span className={`status-label status-label-${statusType!}`} >{code}</span>
+        <span> {detailed_phrase}</span>
         <span class='execution-summary' >{executionTime}s</span>
         <span class='request-url'>   {url}</span>
     </div>;
