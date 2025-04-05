@@ -149,6 +149,8 @@ export const Response: FunctionComponent<{ out: Readonly<HttpResponseAndMetadata
 
     if (body.length < MAX_DEFAULT_FORMAT_LEN) {
         body = formatBody(filenameExtension, body);
+    } else {
+        body = `Response too large (exceeds 0.5MB) to display. Use "Open In Editor" to view the full response in a new tab.`;
     }
     let redirectHistory = ""
     if (history) {
